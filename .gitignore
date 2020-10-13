@@ -27,9 +27,11 @@ Thumbs.db
 .classpath
 .project
 .xml
+META-INF
 
 # Logging
 *.log
 
 # jME (binaries)
 *.so
+/build/
