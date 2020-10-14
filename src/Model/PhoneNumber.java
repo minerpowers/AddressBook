@@ -25,4 +25,66 @@ public class PhoneNumber {
 	private String phoneType;
 	@Column(name="phone_num")
 	private String phoneNum;
+	
+	/**
+	 * PhoneNumber - no argument constructor
+	 */
+	public PhoneNumber() {
+		super();
+	}
+	/**
+	 * PhoneNumber - 3 argument constructor
+	 * @param contact_id
+	 * @param phoneType
+	 * @param phoneNum
+	 */
+	public PhoneNumber(int contact_id, String phoneType, String phoneNum) {
+		super();
+		this.contact_id = contact_id;
+		this.phoneType = phoneType;
+		this.phoneNum = phoneNum;
+	}
+	/**
+	 * getContact_id
+	 * @return contact_id
+	 */
+	public int getContact_id() {
+		return contact_id;
+	}
+	/**
+	 * setContact_id
+	 * @param contact_id
+	 */
+	public void setContact_id(int contact_id) {
+		this.contact_id = contact_id;
+	}
+	/**
+	 * getPhoneType
+	 * @return phoneType
+	 */
+	public String getPhoneType() {
+		return phoneType;
+	}
+	/**
+	 * setPhoneType
+	 * @param phoneType
+	 */
+	public void setPhoneType(String phoneType) {
+		this.phoneType = phoneType;
+	}
+	/**
+	 * getPhoneNum
+	 * @return phoneNum
+	 */
+	public String getPhoneNum() {
+		return phoneNum;
+	}
+	/**
+	 * setPhoneNum
+	 * @param phoneNum
+	 */
+	public void setPhoneNum(String phoneNum) {
+		this.phoneNum = phoneNum;
+	}
+	
 }
