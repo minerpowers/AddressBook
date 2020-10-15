@@ -18,7 +18,7 @@ import javax.persistence.Table;
 @Table(name="email")
 public class Emails {
 	@Id
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	@GeneratedValue(strategy=GenerationType.AUTO)
 	@Column(name="contact_id")
 	private int contact_id;
 	@Column(name="email_type")

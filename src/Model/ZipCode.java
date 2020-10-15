@@ -14,13 +14,13 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 @Entity
-@Table(name="phone_numbers")
+@Table(name="zip_location")
 public class ZipCode {
 	/**
 	 * Variables
 	 */
 	@Id
-	@Column(name="sip_code")
+	@Column(name="zip_code")
 	private int zipCode;
 	@Column(name="city")
 	private String city;

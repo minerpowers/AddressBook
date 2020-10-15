@@ -14,10 +14,12 @@ import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
+import javax.persistence.ForeignKey;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinColumns;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
@@ -35,7 +37,7 @@ public class Contacts {
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	@Column(name="contact_id")
 	private int id;
-	@Column(name="date_reated")
+	@Column(name="date_created")
 	@Temporal(TemporalType.DATE)
 	private Date created;
 	@Column(name="first_name")
@@ -46,15 +48,16 @@ public class Contacts {
 	private String streetAddress;
 	@OneToMany(cascade=CascadeType.MERGE, fetch=FetchType.EAGER)
 	@JoinTable(name="phone_numbers",
-				inverseJoinColumns= {@JoinColumn(name="contact_id", referencedColumnName="contact_id", unique=true)})
+				joinColumns= @JoinColumn(name="contact_id", referencedColumnName="contact_id"),
+				inverseJoinColumns=@JoinColumn(name="contact_id", referencedColumnName="contact_id"))
 	private List<PhoneNumber> phoneList;
 	@OneToMany(cascade=CascadeType.MERGE, fetch=FetchType.EAGER)
-	@JoinTable(name="phone_numbers",
-				inverseJoinColumns= {@JoinColumn(name="contact_id", referencedColumnName="contact_id", unique=true)})
+	@JoinTable(name="email",
+				joinColumns= @JoinColumn(name="contact_id", referencedColumnName="contact_id"),
+				inverseJoinColumns=@JoinColumn(name="contact_id", referencedColumnName="contact_id"))
 	private List<Emails> emailList;
-	@Column(name="zip")
 	@ManyToOne(cascade=CascadeType.MERGE, fetch=FetchType.EAGER)
-	@JoinColumn(name="zip", referencedColumnName="zip_code")
+	@JoinColumns(foreignKey= @ForeignKey(name="fk_zip_location"), value = { @JoinColumn(name="zip")})
 	private ZipCode zipCode;
 	/**
 	 * Contacts: no argument constructor
@@ -80,6 +83,21 @@ public class Contacts {
 		this.streetAddress = streetAddress;
 		this.phoneList = phoneList;
 		this.emailList = emailList;
+		this.zipCode = zipCode;
+	}
+	/**
+	 * Contacts: 4 argument constructor
+	 * @param firstName
+	 * @param lastName
+	 * @param streetAddress
+	 * @param zipCode
+	 */
+	public Contacts(String firstName, String lastName, String streetAddress, ZipCode zipCode) {
+		super();
+		this.created = new Date();
+		this.firstName = firstName;
+		this.lastName = lastName;
+		this.streetAddress = streetAddress;
 		this.zipCode = zipCode;
 	}
 	/**
