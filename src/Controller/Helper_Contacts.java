@@ -7,6 +7,8 @@
  ********************************/
 package Controller;
 
+import java.util.List;
+
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
@@ -39,10 +41,7 @@ public class Helper_Contacts {
 	public void deleteContact(Contacts toDelete) {
 		EntityManager em = emfactory.createEntityManager();
 		em.getTransaction().begin();
-		TypedQuery<Contacts> query = em.createQuery("select c from ZipCode c where c.id =: selectedId", Contacts.class);
-		query.setParameter("selectedId", toDelete.getId());
-		query.setMaxResults(1);
-		Contacts result = query.getSingleResult();
+		Contacts result = em.find(Contacts.class, toDelete.getId());
 		em.remove(result);
 		em.getTransaction().commit();
 		em.close();
@@ -65,13 +64,33 @@ public class Helper_Contacts {
 	 * @param toFind
 	 * @return found - Contacts object
 	 */
-	public Contacts searchById(int toFind) {
+	public Contacts searchById(Integer toFind) {
 		EntityManager em = emfactory.createEntityManager();
 		em.getTransaction().begin();
-		TypedQuery<Contacts> query = em.createQuery("select c from c where c.contact_id =: selectedId", Contacts.class);
-		query.setParameter("selectId", toFind);
+		Contacts found = em.find(Contacts.class, toFind);
+		em.close();
+		return found;
+	}
+	/**
+	 * searchByName - find record by matching fist and last name
+	 * @param toFind
+	 * @return found - Contact object
+	 */
+	public Contacts searchByName(Contacts toFind) {
+		EntityManager em = emfactory.createEntityManager();
+		em.getTransaction().begin();
+		TypedQuery<Contacts> query = em.createQuery("select c from Contacts c where c.firstName =:first_name and c.lastName =:last_name", Contacts.class);
+		query.setParameter("first_name", toFind.getFirstName());
+		query.setParameter("last_name", toFind.getLastName());
+		query.setMaxResults(1);
 		Contacts found = query.getSingleResult();
 		em.close();
 		return found;
+	}
+	public List<Contacts> getAllContacts(){
+		EntityManager em = emfactory.createEntityManager();
+		TypedQuery<Contacts> query = em.createQuery("select c from Contacts c", Contacts.class);
+		List<Contacts> allContacts = query.getResultList();
+		return allContacts;
 	}
 }

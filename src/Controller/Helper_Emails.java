@@ -40,7 +40,7 @@ public class Helper_Emails {
 	public void deleteEmail(Emails toDelete) {
 		EntityManager em = emfactory.createEntityManager();
 		em.getTransaction().begin();
-		TypedQuery<Emails> query = em.createQuery("select e from ZipCode e where e.emailAddress =: selectedEmail", Emails.class);
+		TypedQuery<Emails> query = em.createQuery("select e from Emails e where e.emailAddress = :selectedEmail", Emails.class);
 		query.setParameter("selectedEmail", toDelete.getEmailAddress());
 		query.setMaxResults(1);
 		Emails result = query.getSingleResult();
@@ -67,7 +67,7 @@ public class Helper_Emails {
 	public List<Emails> searchByContact_id(int toFind) {
 		EntityManager em = emfactory.createEntityManager();
 		em.getTransaction().begin();
-		TypedQuery<Emails> query = em.createQuery("select e from e where e.contact_id =: selectedId", Emails.class);
+		TypedQuery<Emails> query = em.createQuery("select e from Emails e where e.contact_id = :selectedId", Emails.class);
 		query.setParameter("selectId", toFind);
 		List<Emails> found = query.getResultList();
 		em.close();

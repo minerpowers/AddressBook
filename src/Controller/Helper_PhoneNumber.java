@@ -40,7 +40,7 @@ public class Helper_PhoneNumber {
 	public void deletePhoneNumber(PhoneNumber toDelete) {
 		EntityManager em = emfactory.createEntityManager();
 		em.getTransaction().begin();
-		TypedQuery<PhoneNumber> query = em.createQuery("select p from ZipCode p where p.phoneNum =: selectedNum", PhoneNumber.class);
+		TypedQuery<PhoneNumber> query = em.createQuery("select p from PhoneNumber p where p.phoneNum = :selectedNum", PhoneNumber.class);
 		query.setParameter("selectedNum", toDelete.getPhoneNum());
 		query.setMaxResults(1);
 		PhoneNumber result = query.getSingleResult();
@@ -67,7 +67,7 @@ public class Helper_PhoneNumber {
 	public List<PhoneNumber> searchByPhoneNum(String toFind) {
 		EntityManager em = emfactory.createEntityManager();
 		em.getTransaction().begin();
-		TypedQuery<PhoneNumber> query = em.createQuery("select p from p where p.phoneNum =: selectedNum", PhoneNumber.class);
+		TypedQuery<PhoneNumber> query = em.createQuery("select p from PhoneNumber p where p.phoneNum = :selectedNum", PhoneNumber.class);
 		query.setParameter("selectNum", toFind);
 		List<PhoneNumber> found = query.getResultList();
 		em.close();

@@ -7,6 +7,8 @@
  ********************************/
 package Controller;
 
+import java.util.List;
+
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
@@ -38,8 +40,8 @@ public class Helper_ZipCode {
 	public void deleteZipCode(ZipCode toDelete) {
 		EntityManager em = emfactory.createEntityManager();
 		em.getTransaction().begin();
-		TypedQuery<ZipCode> query = em.createQuery("select z from ZipCode z where z.zipCode =: selectedZip", ZipCode.class);
-		query.setParameter("selectedZip", toDelete.getZipCode());
+		TypedQuery<ZipCode> query = em.createQuery("select z from ZipCode z where z.zipCode =:selectZip", ZipCode.class);
+		query.setParameter("selectZip", toDelete.getZipCode());
 		query.setMaxResults(1);
 		ZipCode result = query.getSingleResult();
 		em.remove(result);
@@ -66,10 +68,29 @@ public class Helper_ZipCode {
 	public ZipCode searchByZip(int findZip) {
 		EntityManager em = emfactory.createEntityManager();
 		em.getTransaction().begin();
-		TypedQuery<ZipCode> query = em.createQuery("select z from z where z.zipCode =: selectedZip", ZipCode.class);
+		TypedQuery<ZipCode> query = em.createQuery("select z from ZipCode z where z.zipCode =:selectZip", ZipCode.class);
 		query.setParameter("selectZip", findZip);
+		if (query.getResultList().isEmpty()) {
+			return null;
+		}
 		ZipCode found = query.getSingleResult();
+		/*try {
+			found = query.getSingleResult();
+		} catch (NoResultException nre) {
+			return null;
+		}*/
 		em.close();
 		return found;
 	}
+	/**
+	 * getAllZipCodes - add all zip codes to a list
+	 * @return allZipCode - list of ZipCode objects
+	 */
+	public List<ZipCode> getAllZipCodes(){
+		EntityManager em = emfactory.createEntityManager();
+		TypedQuery<ZipCode> query = em.createQuery("select z from ZipCode z", ZipCode.class);
+		List<ZipCode> allZipCode = query.getResultList();
+		return allZipCode;
+	}
+	
 }
