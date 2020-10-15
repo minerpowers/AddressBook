@@ -1,3 +1,15 @@
+/********************************
+ * author: 		Ben Miner
+ * class:		CIS 171 Java II
+ * date:		October 2020
+ * project:		AddressBook
+ * file:		Servlet_listNavigation.java
+ * called from:	view_contacts.jsp - processes form
+ * goes to:		servlet_ViewContactList.java - if delete was selected
+ * 				update_contact.jsp - if edit was selected
+ * 				add_contact.jsp - if add was selected
+ * 				index.html
+ ********************************/
 package Controller;
 
 import java.io.IOException;
@@ -45,12 +57,16 @@ public class Servlet_listNavigation extends HttpServlet {
 				Integer tempId = Integer.parseInt(request.getParameter("id"));
 				Contacts toUpdate = contactHelper.searchById(tempId);
 				request.setAttribute("toUpdate", toUpdate);
+				Helper_PhoneNumber phoneHelper = new Helper_PhoneNumber();
+				request.setAttribute("allPhone", phoneHelper.getPhoneNums(toUpdate.getId()));
+				Helper_Emails emailHelper = new Helper_Emails();
+				request.setAttribute("allEmail", emailHelper.searchByContact_id(toUpdate.getId()));
 				path = "/update_contact.jsp";
 			} catch(NumberFormatException e) {
 				getServletContext().getRequestDispatcher("/index.html").forward(request, response);
 			}
 		}else if(action.equals("add")) {
-			path = "add_contact.jsp";
+			path = "/add_contact.jsp";
 		}
 		getServletContext().getRequestDispatcher(path).forward(request, response);
 	}

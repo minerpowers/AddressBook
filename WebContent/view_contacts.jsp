@@ -4,6 +4,15 @@
 <!DOCTYPE html>
 <html>
 <head>
+<!-- file:			view_contacts.jsp
+	 author: 		Ben Miner
+ 	 course:		CIS 171 Java II
+ 	 date:			October 2020
+ 	 project:		AddressBook
+ 	 called from:	Servlet_ViewContacts.java
+ 	 goes to:		Servlet_listNavigation.java (Submit button)
+ 	 				index.html	(home link)	
+-->
 <meta charset="UTF-8">
 <title>Contact List</title>
 </head>
@@ -25,6 +34,9 @@
 				<button value ="add" name="doThisToContact">Add</button>
 			</div>
 		</form>
+		<div class="links">
+			<a href="index.html">Home</a>
+		</div>
 	</div>
 </body>
 </html>

@@ -1,3 +1,13 @@
+/********************************
+ * author: 		Ben Miner
+ * class:		CIS 171 Java II
+ * date:		October 2020
+ * project:		AddressBook
+ * file:		Servlet_ViewContactList
+ * called from:	index.html
+ * goes to:		view_contacts.jsp - if data is found
+ * 				index.html - if no data is found
+ ********************************/
 package Controller;
 
 import java.io.IOException;
@@ -31,7 +41,7 @@ public class Servlet_ViewContactList extends HttpServlet {
 		request.setAttribute("allContacts", contactHelper.getAllContacts());
 		String path = "/view_contacts.jsp";
 		if(contactHelper.getAllContacts().isEmpty()) {
-			path = "/index.html";
+			//path = "/index.html";
 		}
 		getServletContext().getRequestDispatcher(path).forward(request, response);
 	}

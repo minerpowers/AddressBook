@@ -1,32 +1,31 @@
-
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
 <head>
-<!-- add_contact.jsp
-	 author: 		Ben Miner
- 	 course:		CIS 171 Java II
- 	 date:			October 2020
- 	 project:		AddressBook
- 	 called from:	index.html
- 	 goes to:		servlet_addContact.java (Submit button)
- 	 				index.html	(home link)	
+<!-- 	file:			update_contact.jsp
+		author: 		Ben Miner
+ 		course:			CIS 171 Java II
+ 		date:			October 2020
+ 		project:		AddressBook
+ 		called from:	servlet_listNavigation
+ 		goes to:		servlet_UpdateContact.java (Submit button)
+ 	 					index.html	(home link)	
 -->
 	<meta charset="UTF-8">
-	<title>Add New Contact</title>
+	<title>Update Contact</title>
 </head>
 <body>
-	<!-- form for entering a new contact -->
 	<div class="formContaner">
-		<form action="servlet_addContact" method="post">
+		<form action="servlet_UpdateContact" method="post">
 			<h4>Add New Contact</h4>
-			<label>First Name</label><input type="text" name="firstName">
-			<label>Last Name</label><input type="text" name="lastName"><br><!-- Break -->
-			<label>Street</label><input type="text" name="street"><br><!-- Break -->
-			<label>City</label><input type="text" name="city">
-			<select name="state" size="10">
+			<input type="hidden" name="id" value="${toUpdate.id}">
+			<label>First Name</label><input type="text" name="firstName" value="${toUpdate.firstName}">
+			<label>Last Name</label><input type="text" name="lastName" value="${toUpdate.lastName}"><br><!-- Break -->
+			<label>Street</label><input type="text" name="street"	value="${toUpdate.streetAddress}"><br><!-- Break -->
+			<label>City</label><input type="text" name="city" value="${toUpdate.zipCode.city }">
+			<select name="state" size="5">
 				<option value="AL">AL</option>
 				<option value="AK">AK</option>
 				<option value="AR">AR</option>	
@@ -79,14 +78,18 @@
 				<option value="WV">WV</option>
 				<option value="WY">WY</option>
 			</select>
-			<label>Zip Code</label><input type="number" name="zip"><br><!-- Break -->
-			<label>Phone</label><input type="tel" name="phone" placeholder="555-555-5555" pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}">
+			<label>Zip Code</label><input type="number" name="zip" value="${toUpdate.zipCode.zipCode}"><br><!-- Break -->
+			<c:forEach items="${requestScope.allPhone}" var="currentPhone">
+			<label>Phone</label><input type="tel" name="phone" value="${currentPhone.phoneNum}" pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}">
 				<input type="radio" name="phoneType" value="Cell"><label>Cell</label>
 				<input type="radio" name="phoneType" value="Work"><label>Work</label>
 				<input type="radio" name="phoneType" value="Home"><label>Home</label><br><!-- Break -->
-			<label>email</label><input type="email" name="email">
+			</c:forEach>
+			<c:forEach items="${requestScope.allEmail}" var="currentEmail">
+			<label>email</label><input type="email" name="email" value="${currentEmail.emailAddress}">
 				<input type="radio" name="emailType" value="Work"><label>Work</label>
 				<input type="radio" name="emailType" value="Personal"><label>Personal</label><br><!-- Break -->
+			</c:forEach>
 			<button>Submit</button>
 		</form>	
 		<div>
