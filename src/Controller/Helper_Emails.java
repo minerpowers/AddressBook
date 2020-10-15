@@ -67,9 +67,18 @@ public class Helper_Emails {
 	public List<Emails> searchByContact_id(int toFind) {
 		EntityManager em = emfactory.createEntityManager();
 		em.getTransaction().begin();
-		TypedQuery<Emails> query = em.createQuery("select e from Emails e where e.contact_id = :selectedId", Emails.class);
+		TypedQuery<Emails> query = em.createQuery("select e from Emails e where e.contact_id = :selectId", Emails.class);
 		query.setParameter("selectId", toFind);
 		List<Emails> found = query.getResultList();
+		em.close();
+		return found;
+	}
+	public Emails searchById(int toFind) {
+		EntityManager em = emfactory.createEntityManager();
+		em.getTransaction().begin();
+		TypedQuery<Emails> query = em.createQuery("select e from Emails e where e.contact_id = :selectId", Emails.class);
+		query.setParameter("selectId", toFind);
+		Emails found = query.getSingleResult();
 		em.close();
 		return found;
 	}

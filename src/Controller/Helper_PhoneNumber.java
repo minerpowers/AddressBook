@@ -73,4 +73,23 @@ public class Helper_PhoneNumber {
 		em.close();
 		return found;
 	}
+	public List<PhoneNumber> getPhoneNums(int contactID){
+		EntityManager em = emfactory.createEntityManager();
+		em.getTransaction().begin();
+		TypedQuery<PhoneNumber> query = em.createQuery("select p from PhoneNumber p where p.contact_id = :selectID", PhoneNumber.class);
+		query.setParameter("selectID", contactID);
+		List<PhoneNumber> found = query.getResultList();
+		em.close();
+		return found;
+	}
+	
+	public PhoneNumber getPhoneById(int contactID){
+		EntityManager em = emfactory.createEntityManager();
+		em.getTransaction().begin();
+		TypedQuery<PhoneNumber> query = em.createQuery("select p from PhoneNumber p where p.contact_id = :selectID", PhoneNumber.class);
+		query.setParameter("selectID", contactID);
+		PhoneNumber found = query.getSingleResult();
+		em.close();
+		return found;
+	}
 }
