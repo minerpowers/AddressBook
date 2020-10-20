@@ -22,9 +22,8 @@
 			<table>
 				<c:forEach items="${requestScope.allContacts}" var="currentContact">
 				<tr>
-					<td><input type="radio" name="id" value="${currentContact.id}">${currentContact.id}</td>
-					<td>${currentContact.firstName}</td>
-					<td>${currentContact.lastName}</td>
+					<td><input type="radio" name="id" value="${currentContact.id}"></td>
+					<th>${currentContact.firstName} ${currentContact.lastName}</th>
 				</tr>
 				</c:forEach>
 			</table>
@@ -32,6 +31,7 @@
 				<button value ="edit" name="doThisToContact">Edit</button>
 				<button value ="delete" name="doThisToContact">Delete</button>
 				<button value ="add" name="doThisToContact">Add</button>
+				<button value ="view" name="doThisToContact">View</button>
 			</div>
 		</form>
 		<div class="links">

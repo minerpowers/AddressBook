@@ -65,6 +65,19 @@ public class Servlet_listNavigation extends HttpServlet {
 			} catch(NumberFormatException e) {
 				getServletContext().getRequestDispatcher("/index.html").forward(request, response);
 			}
+		}else if(action.equals("view")) {
+			try {
+				Integer tempId = Integer.parseInt(request.getParameter("id"));
+				Contacts toView = contactHelper.searchById(tempId);
+				request.setAttribute("toView", toView);
+				Helper_PhoneNumber phoneHelper = new Helper_PhoneNumber();
+				request.setAttribute("phone", phoneHelper.getPhoneNums(toView.getId()));
+				Helper_Emails emailHelper = new Helper_Emails();
+				request.setAttribute("email", emailHelper.searchByContact_id(toView.getId()));
+				path = "/view_contact.jsp";
+			} catch(NumberFormatException e) {
+				getServletContext().getRequestDispatcher("/index.html").forward(request, response);
+			}
 		}else if(action.equals("add")) {
 			path = "/add_contact.jsp";
 		}
